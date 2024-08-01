@@ -1,0 +1,11 @@
+## Interface: 110000
+## Title: WarbankMoney
+## Notes: Extends the functionality of the Warband Bank
+## Author: Saix93
+## Version: 1.0.0
+## RequiredDeps:
+## X-Curse-Project-ID: 1075760
+## SavedVariables:
+## SavedVariablesPerCharacter:
+
+WarbankMoney.lua
