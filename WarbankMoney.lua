@@ -2,17 +2,14 @@ local targetFrame = AccountBankPanel
 
 -- Properties
 local width = 160
-local height = 120                                                    -- Height of the addon frame
+local height = 160                                                    -- Height of the addon frame
 local padding = 10                                                    -- Padding between buttons and the frame edges
 local bigButtonWidth = width - padding * 2                            -- Full width minus padding
 local numSmallButtons = 4                                             -- Total small buttons (2 rows)
-local bigButtonHeightRatio = 0.3                                      -- Proportion of the height for the big button
-local bigButtonHeight = height *
-bigButtonHeightRatio                                                  -- Big button height as a fraction of the frame's height
-local remainingHeight = height - bigButtonHeight -
-padding * 2                                                           -- Remaining height after accounting for the big button and padding
-local smallButtonHeight = remainingHeight /
-(numSmallButtons / 2 + 1)                                             -- Height divided among the rows, considering additional padding
+local bigButtonHeightRatio = 0.15                                     -- Further reduced proportion of the height for the big button
+local bigButtonHeight = height * bigButtonHeightRatio                 -- Big button height as a fraction of the frame's height
+local remainingHeight = height - bigButtonHeight - padding * 2        -- Remaining height after accounting for the big button and padding
+local smallButtonHeight = remainingHeight / (numSmallButtons / 2 + 2) -- Height divided among the rows, considering additional padding
 local smallButtonWidth = (width - padding * 3) / 2                    -- Half width minus padding for small buttons
 
 -- Main frame
@@ -52,10 +49,20 @@ local function GetWithdrawableMoney(amount)
     end
 end
 
--- "Deposit All" button
-CreateButton("DepositAllButton", "Deposit All",
+-- "WithdrawAll" button
+CreateButton("WithdrawAllButton", "Withdraw All",
     { width = bigButtonWidth, height = bigButtonHeight },
     { x = padding, y = -padding },
+    function()
+        local bankMoney = C_Bank.FetchDepositedMoney(2)
+        C_Bank.WithdrawMoney(2, bankMoney)
+    end
+)
+
+-- "DepositAll" button
+CreateButton("DepositAllButton", "Deposit All",
+    { width = bigButtonWidth, height = bigButtonHeight },
+    { x = padding, y = -bigButtonHeight - padding * 2 },
     function()
         C_Bank.DepositMoney(2, GetMoney())
     end
@@ -64,7 +71,7 @@ CreateButton("DepositAllButton", "Deposit All",
 -- "+1k" button
 CreateButton("Get1kButton", "+1k",
     { width = smallButtonWidth, height = smallButtonHeight },
-    { x = padding, y = -bigButtonHeight - padding * 1.5 },
+    { x = padding, y = -bigButtonHeight * 2 - padding * 3 },
     function()
         C_Bank.WithdrawMoney(2, GetWithdrawableMoney(10000000))
     end
@@ -73,7 +80,7 @@ CreateButton("Get1kButton", "+1k",
 -- "+10k" button
 CreateButton("Get10kButton", "+10k",
     { width = smallButtonWidth, height = smallButtonHeight },
-    { x = smallButtonWidth + padding * 2, y = -bigButtonHeight - padding * 1.5 },
+    { x = smallButtonWidth + padding * 2, y = -bigButtonHeight * 2 - padding * 3 },
     function()
         C_Bank.WithdrawMoney(2, GetWithdrawableMoney(100000000))
     end
@@ -82,7 +89,7 @@ CreateButton("Get10kButton", "+10k",
 -- "+100k" button
 CreateButton("Get100kButton", "+100k",
     { width = smallButtonWidth, height = smallButtonHeight },
-    { x = padding, y = -bigButtonHeight - smallButtonHeight - padding * 2.5 },
+    { x = padding, y = -bigButtonHeight * 2 - smallButtonHeight - padding * 4 },
     function()
         C_Bank.WithdrawMoney(2, GetWithdrawableMoney(1000000000))
     end
@@ -91,7 +98,7 @@ CreateButton("Get100kButton", "+100k",
 -- "+1M" button
 CreateButton("Get1MButton", "+1M",
     { width = smallButtonWidth, height = smallButtonHeight },
-    { x = smallButtonWidth + padding * 2, y = -bigButtonHeight - smallButtonHeight - padding * 2.5 },
+    { x = smallButtonWidth + padding * 2, y = -bigButtonHeight * 2 - smallButtonHeight - padding * 4 },
     function()
         C_Bank.WithdrawMoney(2, GetWithdrawableMoney(10000000000))
     end

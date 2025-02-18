@@ -1,6 +1,7 @@
 ## Interface: 110000
 ## Title: WarbankMoney
 ## Notes: Extends the functionality of the Warband Bank
+## Added button for Withdraw all
 ## Author: Saix93
 ## Version: 1.0.0
 ## RequiredDeps:
